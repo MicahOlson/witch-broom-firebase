@@ -2,6 +2,7 @@ import { createStore } from 'redux';
 import editingReducer from '../../reducers/editing-reducer';
 import formVisibleReducer from '../../reducers/form-visible-reducer';
 import kegListReducer from '../../reducers/keg-list-reducer';
+import selectedKegReducer from '../../reducers/selected-keg-reducer';
 import rootReducer from '../../reducers/index';
 
 let store = createStore(rootReducer);
@@ -11,7 +12,8 @@ describe("rootReducer", () => {
     expect(rootReducer({}, { type: null })).toEqual({
       editing: false,
       formVisibleOnPage: false,
-      mainKegList: {}
+      mainKegList: {},
+      selectedKeg: null
     });
   });
 
