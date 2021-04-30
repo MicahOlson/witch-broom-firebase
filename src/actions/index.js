@@ -19,3 +19,10 @@ export const addKeg = (keg) => {
     id: id
   }
 };
+
+export const setEditing = (setTo) => {
+  return {
+    type: 'SET_EDITING',
+    editing: setTo
+  }
+};

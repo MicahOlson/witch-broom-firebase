@@ -32,4 +32,11 @@ describe('tap room actions', () => {
       id: 1
     });
   });
+
+  it('setEditing should create SET_EDITING action', () => {
+    expect(actions.setEditing(true)).toEqual({
+      type: 'SET_EDITING',
+      editing: true
+    });
+  });
 });
