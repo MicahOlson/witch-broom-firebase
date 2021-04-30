@@ -4,7 +4,7 @@ describe('kegListReducer', () => {
   let action;
   const kegData = {
     name: 'Nectarine Premiere',
-    brand: 'e Garde Brewing',
+    brand: 'de Garde Brewing',
     price: '7',
     alcoholContent: '7.10',
     pintCount: 124,
@@ -33,6 +33,42 @@ describe('kegListReducer', () => {
         brand: brand,
         price: price,
         alcoholContent: alcoholContent,
+        pintCount: pintCount,
+        id: id
+      }
+    });
+  });
+
+  test('Should successfully update keg data on mainKegList', () => {
+    const { name, brand, price, alcoholContent, pintCount, id } = kegData;
+    action = {
+      type: 'ADD_KEG',
+      name: name,
+      brand: brand,
+      price: price,
+      alcoholContent: alcoholContent,
+      pintCount: pintCount,
+      id: id
+    };
+
+    let updateAction = {
+      type: 'ADD_KEG',
+      name: 'The Broken Truck',
+      brand: brand,
+      price: price,
+      alcoholContent: '5.00',
+      pintCount: pintCount,
+      id: id
+    };
+
+    const newKeg = kegListReducer({}, action);    
+    
+    expect(kegListReducer(newKeg, updateAction)).toEqual({
+      [id]: {
+        name: 'The Broken Truck',
+        brand: brand,
+        price: price,
+        alcoholContent: '5.00',
         pintCount: pintCount,
         id: id
       }
