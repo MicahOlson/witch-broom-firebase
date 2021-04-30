@@ -17,11 +17,11 @@ class KegControl extends React.Component {
   handleClick = () => {
     const { dispatch } = this.props;
     if (this.state.selectedKeg != null) {
-      const toggleEditAction = {
-        type: 'SET_EDIT',
+      const setEditAction = {
+        type: 'SET_EDITING',
         editing: false
       }
-      dispatch(toggleEditAction);
+      dispatch(setEditAction);
       this.setState({
         selectedKeg: null,
       });
@@ -70,7 +70,7 @@ class KegControl extends React.Component {
   handleEditClick = () => {
     const { dispatch } = this.props;
     const action = {
-      type: 'SET_EDIT',
+      type: 'SET_EDITING',
       editing: true
     }
     dispatch(action);
@@ -90,7 +90,7 @@ class KegControl extends React.Component {
     };
     dispatch(addKegAction);
     const setEditAction = {
-      type: 'SET_EDIT',
+      type: 'SET_EDITING',
       editing: false
     }
     dispatch(setEditAction);

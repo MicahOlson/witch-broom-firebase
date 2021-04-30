@@ -1,9 +1,7 @@
 export default (state=false, action) => {
   const { editing } = action;
   switch (action.type) {
-  case 'TOGGLE_EDIT':
-    return !state;
-  case 'SET_EDIT':
+  case 'SET_EDITING':
     return editing;
   default:
     return state;
