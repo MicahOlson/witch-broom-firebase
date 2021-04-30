@@ -7,28 +7,25 @@ import KegList from './KegList';
 import NewKegForm from './NewKegForm';
 
 class KegControl extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleClick = () => {
     const { dispatch } = this.props;
     if (this.props.selectedKeg != null) {
       const setEditAction = {
         type: 'SET_EDITING',
         editing: false
-      }
+      };
       dispatch(setEditAction);
-      this.setState({
-        selectedKeg: null,
-      });
+      const nullSelectedAction = {
+        type: 'NULL_SELECTED'
+      };
+      dispatch(nullSelectedAction);
     } else {
       const toggleFormAction = {
         type: 'TOGGLE_FORM'
-      }
+      };
       dispatch(toggleFormAction);
     }
-  }
+  };
 
   handleAddingNewKegToList = (newKeg) => {
     const { dispatch } = this.props;
@@ -45,33 +42,47 @@ class KegControl extends React.Component {
     dispatch(addKegAction);
     const toggleFormAction = {
       type: 'TOGGLE_FORM'
-    }
+    };
     dispatch(toggleFormAction);
-  }
+  };
 
   handleChangingSelectedKeg = (id) => {
     const selectedKeg = this.props.mainKegList[id];
-    this.setState({selectedKeg: selectedKeg});
-  }
+    const { dispatch } = this.props;
+    const { name, brand, price, alcoholContent, pintCount } = selectedKeg;
+    const setSelectedAction = {
+      type: 'SET_SELECTED',
+      name: name,
+      brand: brand,
+      price: price,
+      alcoholContent: alcoholContent,
+      pintCount: pintCount,
+      id: id
+    };
+    dispatch(setSelectedAction);
+  };
 
   handleDeletingKeg = (id) => {
     const { dispatch } = this.props;
-    const action = {
+    const deleteKegAction = {
       type: 'DELETE_KEG',
       id: id
-    }
-    dispatch(action);
-    this.setState({selectedKeg: null});
-  }
+    };
+    dispatch(deleteKegAction);
+    const nullSelectedAction = {
+      type: 'NULL_SELECTED'
+    };
+    dispatch(nullSelectedAction);
+  };
 
   handleEditClick = () => {
     const { dispatch } = this.props;
     const action = {
       type: 'SET_EDITING',
       editing: true
-    }
+    };
     dispatch(action);
-  }
+  };
 
   handleEditingKegInList = (kegToEdit) => {
     const { dispatch } = this.props;
@@ -89,32 +100,39 @@ class KegControl extends React.Component {
     const setEditAction = {
       type: 'SET_EDITING',
       editing: false
-    }
+    };
     dispatch(setEditAction);
-    this.setState({
-      selectedKeg: null
-    });
-  }
+    const nullSelectedAction = {
+      type: 'NULL_SELECTED'
+    };
+    dispatch(nullSelectedAction);
+  };
 
   handleServeClick = () => {
     const selectedKeg = this.props.selectedKeg;
-    const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
     const { dispatch } = this.props;
-    const { name, brand, price, alcoholContent, pintCount, id } = servedKeg;
-    const action = {
+    const { name, brand, price, alcoholContent, pintCount, id } = selectedKeg;
+    const addKegAction = {
       type: 'ADD_KEG',
       name: name,
       brand: brand,
       price: price,
       alcoholContent: alcoholContent,
-      pintCount: pintCount,
+      pintCount: pintCount-1,
       id: id
     };
-    dispatch(action);
-    this.setState({
-      selectedKeg: servedKeg
-    });
-  }
+    dispatch(addKegAction);
+    const setSelectedAction = {
+      type: 'SET_SELECTED',
+      name: name,
+      brand: brand,
+      price: price,
+      alcoholContent: alcoholContent,
+      pintCount: pintCount-1,
+      id: id
+    };
+    dispatch(setSelectedAction);
+  };
 
   render() {
     let currentlyVisibleState = null;
