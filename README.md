@@ -1,7 +1,7 @@
-# The Witch's Broom
+# The Witch's Broom Redux
 ## _A Keg Inventory Manager_
 ### by: Micah L. Olson
-### created: 4/23/2021
+### created: 4/30/2021
 
 --- 
 
@@ -20,6 +20,7 @@ This application is a keg inventory manager for The Witch's Broom Tap Room provi
 
 ## Technologies Used
 * React
+* Redux
 * JavaScript
 * JSX
 * HTML
