@@ -58,4 +58,10 @@ describe('tap room actions', () => {
       id: 1
     });
   });
+
+  it('nullSelected should create NULL_SELECTED action', () => {
+    expect(actions.nullSelected()).toEqual({
+      type: 'NULL_SELECTED'
+    });
+  });
 });

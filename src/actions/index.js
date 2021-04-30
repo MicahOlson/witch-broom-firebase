@@ -20,12 +20,10 @@ export const addKeg = (keg) => {
   }
 };
 
-export const setEditing = (setTo) => {
-  return {
+export const setEditing = setTo => ({
     type: 'SET_EDITING',
     editing: setTo
-  }
-};
+});
 
 export const setSelected = (keg) => {
   const { name, brand, price, alcoholContent, pintCount, id } = keg;
@@ -39,3 +37,7 @@ export const setSelected = (keg) => {
     id: id
   }
 };
+
+export const nullSelected = () => ({
+  type: 'NULL_SELECTED'
+});
