@@ -4,9 +4,9 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import './index.css';
 import App from './components/App';
-import reducer from './reducers/keg-list-reducer';
+import rootReducer from './reducers/index';
 
-const store = createStore(reducer);
+const store = createStore(rootReducer);
 
 ReactDOM.render(
   <Provider store={store}>
