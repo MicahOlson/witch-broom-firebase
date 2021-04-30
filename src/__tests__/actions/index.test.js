@@ -39,4 +39,23 @@ describe('tap room actions', () => {
       editing: true
     });
   });
+
+  it('setSelected should create SET_SELECTED action', () => {
+    expect(actions.setSelected({
+      name: 'Nectarine Premiere',
+      brand: 'de Garde Brewing',
+      price: '7',
+      alcoholContent: '7.10',
+      pintCount: 124,
+      id: 1
+    })).toEqual({
+      type: 'SET_SELECTED',
+      name: 'Nectarine Premiere',
+      brand: 'de Garde Brewing',
+      price: '7',
+      alcoholContent: '7.10',
+      pintCount: 124,
+      id: 1
+    });
+  });
 });
