@@ -9,7 +9,7 @@ function KegDetail(props) {
       return "Out of stock!"
     } else if (keg.pintCount < 10) {
       let suffix = "s";
-      if (keg.pintCount === 1) {suffix = "" };
+      if (keg.pintCount === 1) {suffix = "" }
       return `Only ${keg.pintCount} pint${suffix} left. Drink one while you can and order another keg!`
     } else {
       return keg.pintCount
