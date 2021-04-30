@@ -47,7 +47,7 @@ class KegControl extends React.Component {
   }
 
   handleChangingSelectedKeg = (id) => {
-    const selectedKeg = this.state.mainKegList.filter(keg => keg.id === id)[0];
+    const selectedKeg = this.props.mainKegList[id];
     this.setState({selectedKeg: selectedKeg});
   }
 
@@ -135,7 +135,7 @@ class KegControl extends React.Component {
     } else {
       currentlyVisibleState = 
         <KegList 
-          kegList={this.state.mainKegList}
+          kegList={this.props.mainKegList}
           onKegSelection={this.handleChangingSelectedKeg}
         />
       buttonText = "Add Keg";
