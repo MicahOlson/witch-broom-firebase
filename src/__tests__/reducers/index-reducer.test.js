@@ -29,6 +29,10 @@ describe("rootReducer", () => {
     expect(store.getState().mainKegList).toEqual(kegListReducer(undefined, { type: null }));
   });
   
+  test('Check that initial state of selectedKegReducer matches root reducer', () => {
+    expect(store.getState().selectedKeg).toEqual(selectedKegReducer(undefined, { type: null }));
+  });
+  
   test('Check that ADD_KEG action works for kegListReducer and root reducer', () => {
     const action = {
       type: 'ADD_KEG',
