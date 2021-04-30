@@ -10,7 +10,6 @@ class KegControl extends React.Component {
     super(props);
     this.state = {
       formVisibleOnPage: false,
-      mainKegList: [],
       selectedKeg: null,
       editing: false
     };
@@ -31,11 +30,19 @@ class KegControl extends React.Component {
   }
 
   handleAddingNewKegToList = (newKeg) => {
-    const newMainKegList = this.state.mainKegList.concat(newKeg);
-    this.setState({
-      mainKegList: newMainKegList,
-      formVisibleOnPage: false
-    });
+    const { dispatch } = this.props;
+    const { name, brand, price, alcoholContent, pintCount, id } = newKeg;
+    const action = {
+      type: 'ADD_KEG',
+      name: name,
+      brand: brand,
+      price: price,
+      alcoholContent: alcoholContent,
+      pintCount: pintCount,
+      id: id
+    };
+    dispatch(action);
+    this.setState({formVisibleOnPage: false});
   }
 
   handleChangingSelectedKeg = (id) => {
@@ -44,11 +51,12 @@ class KegControl extends React.Component {
   }
 
   handleDeletingKeg = (id) => {
-    const newMainKegList = this.state.mainKegList.filter(keg => keg.id !== id);
-    this.setState({
-      mainKegList: newMainKegList,
-      selectedKeg: null
-    });
+    const { dispatch } = this.props;
+    const action = {
+      type: 'DELETE_KEG',
+      id: id
+    }
+    this.setState({selectedKeg: null});
   }
 
   handleEditClick = () => {
@@ -56,24 +64,44 @@ class KegControl extends React.Component {
   }
 
   handleEditingKegInList = (kegToEdit) => {
-    const editedMainKegList = this.state.mainKegList
-      .filter(keg => keg.id !== this.state.selectedKeg.id)
-      .concat(kegToEdit);
+    const { dispatch } = this.props;
+    const { name, brand, price, alcoholContent, pintCount, id } = kegToEdit;
+    const action = {
+      type: 'ADD_KEG',
+      name: name,
+      brand: brand,
+      price: price,
+      alcoholContent: alcoholContent,
+      pintCount: pintCount,
+      id: id
+    };
+    dispatch(action);
     this.setState({
-      mainKegList: editedMainKegList,
       editing: false,
       selectedKeg: null
     });
   }
 
   handleServeClick = () => {
-    const selectedKeg = this.state.selectedKeg;
-    const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
-    const editedMainKegList = this.state.mainKegList
-      .filter(keg => keg.id !== this.state.selectedKeg.id)
-      .concat(servedKeg);
+    // const selectedKeg = this.state.selectedKeg;
+    // const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
+    // const editedMainKegList = this.state.mainKegList
+    //   .filter(keg => keg.id !== this.state.selectedKeg.id)
+    //   .concat(servedKeg);
+    const { dispatch } = this.props;
+    const { name, brand, price, alcoholContent, pintCount, id } = this.state.selectedKeg;
+    const action = {
+      type: 'ADD_KEG',
+      name: name,
+      brand: brand,
+      price: price,
+      alcoholContent: alcoholContent,
+      pintCount: pintCount-1,
+      id: id
+    };
+    dispatch(action);
     this.setState({
-      mainKegList: editedMainKegList,
+      // mainKegList: editedMainKegList,
       selectedKeg: servedKeg
     });
   }
