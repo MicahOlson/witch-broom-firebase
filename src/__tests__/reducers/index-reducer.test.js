@@ -48,4 +48,12 @@ describe("rootReducer", () => {
     store.dispatch(action);
     expect(store.getState().formVisibleOnPage).toEqual(formVisibleReducer(undefined, action));
   });
+
+  test('Check that TOGGLE_EDIT action works for editingReducer and root reducer', () => {
+    const action = {
+      type: 'TOGGLE_EDIT'
+    }
+    store.dispatch(action);
+    expect(store.getState().editing).toEqual(editingReducer(undefined, action));
+  });
 });
