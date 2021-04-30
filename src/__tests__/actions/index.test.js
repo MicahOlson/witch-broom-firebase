@@ -1,16 +1,17 @@
 import * as actions from './../../actions';
+import * as c from '../../actions/ActionTypes';
 
 describe('tap room actions', () => {
   it('deleteKeg should create DELETE_KEG action', () => {
     expect(actions.deleteKeg(1)).toEqual({
-      type: 'DELETE_KEG',
+      type: c.DELETE_KEG,
       id: 1
     });
   });
 
   it('toggleForm should create TOGGLE_FORM action', () => {
     expect(actions.toggleForm()).toEqual({
-      type: 'TOGGLE_FORM'
+      type: c.TOGGLE_FORM
     });
   });
 
@@ -23,7 +24,7 @@ describe('tap room actions', () => {
       pintCount: 124,
       id: 1
     })).toEqual({
-      type: 'ADD_KEG',
+      type: c.ADD_KEG,
       name: 'Nectarine Premiere',
       brand: 'de Garde Brewing',
       price: '7',
@@ -35,7 +36,7 @@ describe('tap room actions', () => {
 
   it('setEditing should create SET_EDITING action', () => {
     expect(actions.setEditing(true)).toEqual({
-      type: 'SET_EDITING',
+      type: c.SET_EDITING,
       editing: true
     });
   });
@@ -49,7 +50,7 @@ describe('tap room actions', () => {
       pintCount: 124,
       id: 1
     })).toEqual({
-      type: 'SET_SELECTED',
+      type: c.SET_SELECTED,
       name: 'Nectarine Premiere',
       brand: 'de Garde Brewing',
       price: '7',
@@ -61,7 +62,7 @@ describe('tap room actions', () => {
 
   it('nullSelected should create NULL_SELECTED action', () => {
     expect(actions.nullSelected()).toEqual({
-      type: 'NULL_SELECTED'
+      type: c.NULL_SELECTED
     });
   });
 });

@@ -1,3 +1,4 @@
+import * as c from '../../actions/ActionTypes';
 import selectedKegReducer from '../../reducers/selected-keg-reducer';
 
 describe('selectedKegReducer', () => {
@@ -19,7 +20,7 @@ describe('selectedKegReducer', () => {
   test('Should successfully set selected keg', () => {
     const { name, brand, price, alcoholContent, pintCount, id } = kegData;
     action = {
-      type: 'SET_SELECTED',
+      type: c.SET_SELECTED,
       name: name,
       brand: brand,
       price: price,
@@ -40,7 +41,7 @@ describe('selectedKegReducer', () => {
 
   test('Should successfully reset selected keg to null', () => {
     action = {
-      type: 'NULL_SELECTED',
+      type: c.NULL_SELECTED,
     };
 
     expect(selectedKegReducer({}, action)).toEqual(null);

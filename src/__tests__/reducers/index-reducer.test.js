@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import * as c from '../../actions/ActionTypes';
 import editingReducer from '../../reducers/editing-reducer';
 import formVisibleReducer from '../../reducers/form-visible-reducer';
 import kegListReducer from '../../reducers/keg-list-reducer';
@@ -47,7 +48,7 @@ describe("rootReducer", () => {
   test('Check that ADD_KEG action works for kegListReducer and root reducer', () => {
     const { name, brand, price, alcoholContent, pintCount, id } = kegData;
     action = {
-      type: 'ADD_KEG',
+      type: c.ADD_KEG,
       name: name,
       brand: brand,
       price: price,
@@ -61,15 +62,16 @@ describe("rootReducer", () => {
 
   test('Check that TOGGLE_FORM action works for formVisibleReducer and root reducer', () => {
     action = {
-      type: 'TOGGLE_FORM'
+      type: c.TOGGLE_FORM
     }
     store.dispatch(action);
     expect(store.getState().formVisibleOnPage).toEqual(formVisibleReducer(undefined, action));
   });
 
-  test('Check that TOGGLE_EDIT action works for editingReducer and root reducer', () => {
+  test('Check that SET_EDITING action works for editingReducer and root reducer', () => {
     action = {
-      type: 'TOGGLE_EDIT'
+      type: c.SET_EDITING,
+      editing: true
     }
     store.dispatch(action);
     expect(store.getState().editing).toEqual(editingReducer(undefined, action));
@@ -78,7 +80,7 @@ describe("rootReducer", () => {
   test('Check that SET_SELECTED action works for selectedKegReducer and root reducer', () => {
     const { name, brand, price, alcoholContent, pintCount, id } = kegData;
     action = {
-      type: 'SET_SELECTED',
+      type: c.SET_SELECTED,
       name: name,
       brand: brand,
       price: price,

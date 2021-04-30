@@ -1,3 +1,4 @@
+import * as c from '../../actions/ActionTypes';
 import kegListReducer from '../../reducers/keg-list-reducer';
 
 describe('kegListReducer', () => {
@@ -38,7 +39,7 @@ describe('kegListReducer', () => {
   test('Should successfully add new keg data to mainKegList', () => {
     const { name, brand, price, alcoholContent, pintCount, id } = kegData;
     action = {
-      type: 'ADD_KEG',
+      type: c.ADD_KEG,
       name: name,
       brand: brand,
       price: price,
@@ -62,7 +63,7 @@ describe('kegListReducer', () => {
   test('Should successfully update keg data on mainKegList', () => {
     const { name, brand, price, alcoholContent, pintCount, id } = kegData;
     action = {
-      type: 'ADD_KEG',
+      type: c.ADD_KEG,
       name: name,
       brand: brand,
       price: price,
@@ -72,7 +73,7 @@ describe('kegListReducer', () => {
     };
 
     let updateAction = {
-      type: 'ADD_KEG',
+      type: c.ADD_KEG,
       name: 'The Broken Truck',
       brand: brand,
       price: price,
@@ -97,9 +98,10 @@ describe('kegListReducer', () => {
 
   test('Should successfully delete a keg', () => {
     action = {
-      type: 'DELETE_KEG',
+      type: c.DELETE_KEG,
       id: 1
     };
+    
     expect(kegListReducer(currentState, action)).toEqual({
       2: {
         name: 'The Abyss',

@@ -1,3 +1,4 @@
+import * as c from '../../actions/ActionTypes';
 import editingReducer from '../../reducers/editing-reducer';
 
 describe("editingReducer", () => {
@@ -6,6 +7,6 @@ describe("editingReducer", () => {
   });
 
   test('Should successfully set state to true', () => {
-    expect(editingReducer(false, { type: 'SET_EDITING', editing: true })).toEqual(true);
+    expect(editingReducer(false, { type: c.SET_EDITING, editing: true })).toEqual(true);
   });
 });
