@@ -20,4 +20,18 @@ describe("rootReducer", () => {
   test('Check that initial state of formVisibleReducer matches root reducer', () => {
     expect(store.getState().formVisibleOnPage).toEqual(formVisibleReducer(undefined, { type: null }));
   });
+
+  test('Check that ADD_KEG action works for kegListReducer and root reducer', () => {
+    const action = {
+      type: 'ADD_KEG',
+      name: 'Nectarine Premiere',
+      brand: 'de Garde Brewing',
+      price: '7',
+      alcoholContent: '7.10',
+      pintCount: 124,
+      id: 1
+    }
+    store.dispatch(action);
+    expect(store.getState().mainKegList).toEqual(kegListReducer(undefined, action));
+  });
 });
