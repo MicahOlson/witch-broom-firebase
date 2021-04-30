@@ -22,14 +22,18 @@ class KegControl extends React.Component {
         editing: false
       });
     } else {
-
+      const { dispatch } = this.props;
+      const action = {
+        type: 'TOGGLE_FORM'
+      }
+      dispatch(action);
     }
   }
 
   handleAddingNewKegToList = (newKeg) => {
     const { dispatch } = this.props;
     const { name, brand, price, alcoholContent, pintCount, id } = newKeg;
-    const action = {
+    const addKegAction = {
       type: 'ADD_KEG',
       name: name,
       brand: brand,
@@ -38,7 +42,11 @@ class KegControl extends React.Component {
       pintCount: pintCount,
       id: id
     };
-    dispatch(action);
+    dispatch(addKegAction);
+    const toggleFormAction = {
+      type: 'TOGGLE_FORM'
+    }
+    dispatch(toggleFormAction);
   }
 
   handleChangingSelectedKeg = (id) => {
