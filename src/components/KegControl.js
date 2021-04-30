@@ -57,6 +57,7 @@ class KegControl extends React.Component {
       type: 'DELETE_KEG',
       id: id
     }
+    dispatch(action);
     this.setState({selectedKeg: null});
   }
 
@@ -84,20 +85,20 @@ class KegControl extends React.Component {
   }
 
   handleServeClick = () => {
-    // const selectedKeg = this.state.selectedKeg;
-    // const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
+    const selectedKeg = this.state.selectedKeg;
+    const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
     // const editedMainKegList = this.state.mainKegList
     //   .filter(keg => keg.id !== this.state.selectedKeg.id)
     //   .concat(servedKeg);
     const { dispatch } = this.props;
-    const { name, brand, price, alcoholContent, pintCount, id } = this.state.selectedKeg;
+    const { name, brand, price, alcoholContent, pintCount, id } = servedKeg;
     const action = {
       type: 'ADD_KEG',
       name: name,
       brand: brand,
       price: price,
       alcoholContent: alcoholContent,
-      pintCount: pintCount-1,
+      pintCount: pintCount,
       id: id
     };
     dispatch(action);

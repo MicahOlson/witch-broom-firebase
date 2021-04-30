@@ -3,7 +3,7 @@ import Keg from './Keg';
 import PropTypes from 'prop-types';
 
 function KegList(props) {
-  const kegListSorted = props.kegList.sort((a, b) => (a.name > b.name) ? 1 : -1)
+  const kegListSorted = Object.values(props.kegList).sort((a, b) => (a.name > b.name) ? 1 : -1)
   return (
     <>
       {kegListSorted.map((keg) =>
@@ -23,7 +23,7 @@ function KegList(props) {
 }
 
 KegList.propTypes = {
-  kegList: PropTypes.array,
+  kegList: PropTypes.object,
   onKegSelection: PropTypes.func
 };
 
