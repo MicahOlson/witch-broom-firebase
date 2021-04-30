@@ -8,6 +8,17 @@ import rootReducer from '../../reducers/index';
 let store = createStore(rootReducer);
 
 describe("rootReducer", () => {
+  let action;
+
+  const kegData = {
+    name: 'Nectarine Premiere',
+    brand: 'de Garde Brewing',
+    price: '7',
+    alcoholContent: '7.10',
+    pintCount: 124,
+    id: 1
+  };
+
   test('Should return default state if no action type is recognized', () => {
     expect(rootReducer({}, { type: null })).toEqual({
       editing: false,
@@ -32,23 +43,24 @@ describe("rootReducer", () => {
   test('Check that initial state of selectedKegReducer matches root reducer', () => {
     expect(store.getState().selectedKeg).toEqual(selectedKegReducer(undefined, { type: null }));
   });
-  
+
   test('Check that ADD_KEG action works for kegListReducer and root reducer', () => {
-    const action = {
+    const { name, brand, price, alcoholContent, pintCount, id } = kegData;
+    action = {
       type: 'ADD_KEG',
-      name: 'Nectarine Premiere',
-      brand: 'de Garde Brewing',
-      price: '7',
-      alcoholContent: '7.10',
-      pintCount: 124,
-      id: 1
+      name: name,
+      brand: brand,
+      price: price,
+      alcoholContent: alcoholContent,
+      pintCount: pintCount,
+      id: id
     }
     store.dispatch(action);
     expect(store.getState().mainKegList).toEqual(kegListReducer(undefined, action));
   });
 
   test('Check that TOGGLE_FORM action works for formVisibleReducer and root reducer', () => {
-    const action = {
+    action = {
       type: 'TOGGLE_FORM'
     }
     store.dispatch(action);
@@ -56,10 +68,25 @@ describe("rootReducer", () => {
   });
 
   test('Check that TOGGLE_EDIT action works for editingReducer and root reducer', () => {
-    const action = {
+    action = {
       type: 'TOGGLE_EDIT'
     }
     store.dispatch(action);
     expect(store.getState().editing).toEqual(editingReducer(undefined, action));
+  });
+
+  test('Check that SET_SELECTED action works for selectedKegReducer and root reducer', () => {
+    const { name, brand, price, alcoholContent, pintCount, id } = kegData;
+    action = {
+      type: 'SET_SELECTED',
+      name: name,
+      brand: brand,
+      price: price,
+      alcoholContent: alcoholContent,
+      pintCount: pintCount,
+      id: id
+    };
+    store.dispatch(action);
+    expect(store.getState().selectedKeg).toEqual(selectedKegReducer(undefined, action));
   });
 });
