@@ -11,22 +11,25 @@ class KegControl extends React.Component {
     super(props);
     this.state = {
       selectedKeg: null,
-      editing: false
     };
   }
 
   handleClick = () => {
+    const { dispatch } = this.props;
     if (this.state.selectedKeg != null) {
+      const toggleEditAction = {
+        type: 'SET_EDIT',
+        editing: false
+      }
+      dispatch(toggleEditAction);
       this.setState({
         selectedKeg: null,
-        editing: false
       });
     } else {
-      const { dispatch } = this.props;
-      const action = {
+      const toggleFormAction = {
         type: 'TOGGLE_FORM'
       }
-      dispatch(action);
+      dispatch(toggleFormAction);
     }
   }
 
@@ -65,13 +68,18 @@ class KegControl extends React.Component {
   }
 
   handleEditClick = () => {
-    this.setState({editing: true});
+    const { dispatch } = this.props;
+    const action = {
+      type: 'SET_EDIT',
+      editing: true
+    }
+    dispatch(action);
   }
 
   handleEditingKegInList = (kegToEdit) => {
     const { dispatch } = this.props;
     const { name, brand, price, alcoholContent, pintCount, id } = kegToEdit;
-    const action = {
+    const addKegAction = {
       type: 'ADD_KEG',
       name: name,
       brand: brand,
@@ -80,9 +88,13 @@ class KegControl extends React.Component {
       pintCount: pintCount,
       id: id
     };
-    dispatch(action);
+    dispatch(addKegAction);
+    const setEditAction = {
+      type: 'SET_EDIT',
+      editing: false
+    }
+    dispatch(setEditAction);
     this.setState({
-      editing: false,
       selectedKeg: null
     });
   }
@@ -90,9 +102,6 @@ class KegControl extends React.Component {
   handleServeClick = () => {
     const selectedKeg = this.state.selectedKeg;
     const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
-    // const editedMainKegList = this.state.mainKegList
-    //   .filter(keg => keg.id !== this.state.selectedKeg.id)
-    //   .concat(servedKeg);
     const { dispatch } = this.props;
     const { name, brand, price, alcoholContent, pintCount, id } = servedKeg;
     const action = {
@@ -106,7 +115,6 @@ class KegControl extends React.Component {
     };
     dispatch(action);
     this.setState({
-      // mainKegList: editedMainKegList,
       selectedKeg: servedKeg
     });
   }
@@ -114,7 +122,7 @@ class KegControl extends React.Component {
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-    if (this.state.editing) {
+    if (this.props.editing) {
       currentlyVisibleState =
         <EditKegForm
           keg={this.state.selectedKeg}
@@ -154,14 +162,16 @@ class KegControl extends React.Component {
 }
 
 KegControl.propTypes = {
-  mainKegList: PropTypes.object,
-  formVisibleOnPage: PropTypes.bool
+  editing: PropTypes.bool,
+  formVisibleOnPage: PropTypes.bool,
+  mainKegList: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    mainKegList: state.mainKegList,
-    formVisibleOnPage: state.formVisibleOnPage
+    editing: state.editing,
+    formVisibleOnPage: state.formVisibleOnPage,
+    mainKegList: state.mainKegList
   }
 };
 
