@@ -9,14 +9,11 @@ import NewKegForm from './NewKegForm';
 class KegControl extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedKeg: null,
-    };
   }
 
   handleClick = () => {
     const { dispatch } = this.props;
-    if (this.state.selectedKeg != null) {
+    if (this.props.selectedKeg != null) {
       const setEditAction = {
         type: 'SET_EDITING',
         editing: false
@@ -100,7 +97,7 @@ class KegControl extends React.Component {
   }
 
   handleServeClick = () => {
-    const selectedKeg = this.state.selectedKeg;
+    const selectedKeg = this.props.selectedKeg;
     const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
     const { dispatch } = this.props;
     const { name, brand, price, alcoholContent, pintCount, id } = servedKeg;
@@ -125,14 +122,14 @@ class KegControl extends React.Component {
     if (this.props.editing) {
       currentlyVisibleState =
         <EditKegForm
-          keg={this.state.selectedKeg}
+          keg={this.props.selectedKeg}
           onEditKeg={this.handleEditingKegInList}
         />
       buttonText = "Return to Keg List"
-    } else if (this.state.selectedKeg != null) {
+    } else if (this.props.selectedKeg != null) {
       currentlyVisibleState = 
         <KegDetail
-          keg={this.state.selectedKeg}
+          keg={this.props.selectedKeg}
           onClickingServe={this.handleServeClick}
           onClickingDelete={this.handleDeletingKeg}
           onClickingEdit={this.handleEditClick}
@@ -164,14 +161,16 @@ class KegControl extends React.Component {
 KegControl.propTypes = {
   editing: PropTypes.bool,
   formVisibleOnPage: PropTypes.bool,
-  mainKegList: PropTypes.object
+  mainKegList: PropTypes.object,
+  selectedKeg: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
     editing: state.editing,
     formVisibleOnPage: state.formVisibleOnPage,
-    mainKegList: state.mainKegList
+    mainKegList: state.mainKegList,
+    selectedKeg: state.selectedKeg
   }
 };
 
