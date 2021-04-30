@@ -16,10 +16,10 @@ describe('selectedKegReducer', () => {
     expect(selectedKegReducer(undefined, { type: null })).toEqual(null);
   });
 
-  test('Should successfully return selected keg from mainKegList', () => {
+  test('Should successfully set selected keg', () => {
     const { name, brand, price, alcoholContent, pintCount, id } = kegData;
     action = {
-      type: 'GET_KEG',
+      type: 'SET_SELECTED',
       name: name,
       brand: brand,
       price: price,
@@ -29,14 +29,20 @@ describe('selectedKegReducer', () => {
     };
 
     expect(selectedKegReducer({}, action)).toEqual({
-      [id]: {
-        name: name,
-        brand: brand,
-        price: price,
-        alcoholContent: alcoholContent,
-        pintCount: pintCount,
-        id: id
-      }
+      name: name,
+      brand: brand,
+      price: price,
+      alcoholContent: alcoholContent,
+      pintCount: pintCount,
+      id: id
     });
+  });
+
+  test('Should successfully reset selected keg to null', () => {
+    action = {
+      type: 'NULL_SELECTED',
+    };
+
+    expect(selectedKegReducer({}, action)).toEqual(null);
   });
 });
