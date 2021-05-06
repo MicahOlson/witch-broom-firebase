@@ -36,66 +36,6 @@ describe('kegListReducer', () => {
     expect(kegListReducer({}, { type: null })).toEqual({});
   });
 
-  test('Should successfully add new keg data to mainKegList', () => {
-    const { name, brand, price, alcoholContent, pintCount, id } = kegData;
-    action = {
-      type: c.ADD_KEG,
-      name: name,
-      brand: brand,
-      price: price,
-      alcoholContent: alcoholContent,
-      pintCount: pintCount,
-      id: id
-    };
-
-    expect(kegListReducer({}, action)).toEqual({
-      [id]: {
-        name: name,
-        brand: brand,
-        price: price,
-        alcoholContent: alcoholContent,
-        pintCount: pintCount,
-        id: id
-      }
-    });
-  });
-
-  test('Should successfully update keg data on mainKegList', () => {
-    const { name, brand, price, alcoholContent, pintCount, id } = kegData;
-    action = {
-      type: c.ADD_KEG,
-      name: name,
-      brand: brand,
-      price: price,
-      alcoholContent: alcoholContent,
-      pintCount: pintCount,
-      id: id
-    };
-
-    let updateAction = {
-      type: c.ADD_KEG,
-      name: 'The Broken Truck',
-      brand: brand,
-      price: price,
-      alcoholContent: '5.00',
-      pintCount: pintCount,
-      id: id
-    };
-
-    const newKeg = kegListReducer({}, action);    
-    
-    expect(kegListReducer(newKeg, updateAction)).toEqual({
-      [id]: {
-        name: 'The Broken Truck',
-        brand: brand,
-        price: price,
-        alcoholContent: '5.00',
-        pintCount: pintCount,
-        id: id
-      }
-    });
-  });
-
   test('Should successfully delete a keg', () => {
     action = {
       type: c.DELETE_KEG,

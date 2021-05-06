@@ -23,8 +23,6 @@ class KegControl extends React.Component {
 
   handleAddingNewKegToList = (newKeg) => {
     const { dispatch } = this.props;
-    const addKegAction = a.addKeg(newKeg);
-    dispatch(addKegAction);
     const toggleFormAction = a.toggleForm();
     dispatch(toggleFormAction);
   };
@@ -50,25 +48,25 @@ class KegControl extends React.Component {
     dispatch(action);
   };
 
-  handleEditingKegInList = (kegToEdit) => {
-    const { dispatch } = this.props;
-    const addKegAction = a.addKeg(kegToEdit);
-    dispatch(addKegAction);
-    const setEditAction = a.setEditing(false);
-    dispatch(setEditAction);
-    const nullSelectedAction = a.nullSelected();
-    dispatch(nullSelectedAction);
-  };
+  // handleEditingKegInList = (kegToEdit) => {
+  //   const { dispatch } = this.props;
+  //   const addKegAction = a.addKeg(kegToEdit);
+  //   dispatch(addKegAction);
+  //   const setEditAction = a.setEditing(false);
+  //   dispatch(setEditAction);
+  //   const nullSelectedAction = a.nullSelected();
+  //   dispatch(nullSelectedAction);
+  // };
 
-  handleServeClick = () => {
-    const selectedKeg = this.props.selectedKeg;
-    const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
-    const { dispatch } = this.props;
-    const addKegAction = a.addKeg(servedKeg);
-    dispatch(addKegAction);
-    const setSelectedAction = a.setSelected(servedKeg);
-    dispatch(setSelectedAction);
-  };
+  // handleServeClick = () => {
+  //   const selectedKeg = this.props.selectedKeg;
+  //   const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
+  //   const { dispatch } = this.props;
+  //   const addKegAction = a.addKeg(servedKeg);
+  //   dispatch(addKegAction);
+  //   const setSelectedAction = a.setSelected(servedKeg);
+  //   dispatch(setSelectedAction);
+  // };
 
   render() {
     let currentlyVisibleState = null;

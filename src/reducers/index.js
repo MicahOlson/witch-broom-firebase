@@ -12,5 +12,5 @@ const rootReducer = combineReducers({
   selectedKeg: selectedKegReducer,
   firestore: firestoreReducer
 });
-console.log(firestoreReducer);
+
 export default rootReducer;

@@ -15,25 +15,6 @@ describe('tap room actions', () => {
     });
   });
 
-  it('addKeg should create ADD_KEG action', () => {
-    expect(actions.addKeg({
-      name: 'Nectarine Premiere',
-      brand: 'de Garde Brewing',
-      price: '7',
-      alcoholContent: '7.10',
-      pintCount: 124,
-      id: 1
-    })).toEqual({
-      type: c.ADD_KEG,
-      name: 'Nectarine Premiere',
-      brand: 'de Garde Brewing',
-      price: '7',
-      alcoholContent: '7.10',
-      pintCount: 124,
-      id: 1
-    });
-  });
-
   it('setEditing should create SET_EDITING action', () => {
     expect(actions.setEditing(true)).toEqual({
       type: c.SET_EDITING,

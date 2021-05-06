@@ -20,15 +20,6 @@ describe("rootReducer", () => {
     id: 1
   };
 
-  // test('Should return default state if no action type is recognized', () => {
-  //   expect(rootReducer({}, { type: null })).toEqual({
-  //     editing: false,
-  //     formVisibleOnPage: false,
-  //     mainKegList: {},
-  //     selectedKeg: null
-  //   });
-  // });
-
   test('Check that initial state of editing matches root reducer', () => {
     expect(store.getState().editing).toEqual(editingReducer(undefined, { type: null }));
   });
@@ -43,21 +34,6 @@ describe("rootReducer", () => {
   
   test('Check that initial state of selectedKegReducer matches root reducer', () => {
     expect(store.getState().selectedKeg).toEqual(selectedKegReducer(undefined, { type: null }));
-  });
-
-  test('Check that ADD_KEG action works for kegListReducer and root reducer', () => {
-    const { name, brand, price, alcoholContent, pintCount, id } = kegData;
-    action = {
-      type: c.ADD_KEG,
-      name: name,
-      brand: brand,
-      price: price,
-      alcoholContent: alcoholContent,
-      pintCount: pintCount,
-      id: id
-    }
-    store.dispatch(action);
-    expect(store.getState().mainKegList).toEqual(kegListReducer(undefined, action));
   });
 
   test('Check that TOGGLE_FORM action works for formVisibleReducer and root reducer', () => {
