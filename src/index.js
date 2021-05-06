@@ -6,7 +6,7 @@ import './index.css';
 import App from './components/App';
 import rootReducer from './reducers/index';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
-import { createFireStoreInstance } from 'redux-firestore';
+import { createFirestoreInstance } from 'redux-firestore';
 import firebase from './firebase';
 
 const store = createStore(rootReducer);
