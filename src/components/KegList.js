@@ -1,29 +1,43 @@
 import React from 'react';
-import Keg from './Keg';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { useFirestoreConnect , isLoaded, isEmpty } from 'react-redux-firebase';
+import Keg from './Keg';
 
 function KegList(props) {
-  const kegListSorted = Object.values(props.kegList).sort((a, b) => (a.name > b.name) ? 1 : -1)
-  return (
-    <>
-      {kegListSorted.map((keg) =>
-        <Keg 
-          whenKegClicked={props.onKegSelection}
-          name={keg.name}
-          brand={keg.brand}
-          price={keg.price}
-          alcoholContent={keg.alcoholContent}
-          pintCount={keg.pintCount}
-          id={keg.id}
-          key={keg.id}
-        />
-      )}
-    </>
-  );
+  useFirestoreConnect([
+    { collection: 'kegs' }
+  ]);
+
+  const kegs = useSelector(state => state.firestore.ordered.kegs);
+
+  if (isLoaded(kegs)) {
+    return (
+      <>
+        {kegs.map((keg) => {
+          return <Keg
+            whenKegClicked={props.onKegSelection}
+            name={keg.name}
+            brand={keg.brand}
+            price={keg.price}
+            alcoholContent={keg.alcoholContent}
+            pintCount={keg.pintCount}
+            id={keg.id}
+            key={keg.id}
+          />
+        })}
+      </>
+    );
+  } else {
+    return (
+      <>
+        <h3>Loading...</h3>
+      </>
+    )
+  }
 }
 
 KegList.propTypes = {
-  kegList: PropTypes.object,
   onKegSelection: PropTypes.func
 };
 
