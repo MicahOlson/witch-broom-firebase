@@ -46,9 +46,8 @@ class KegControl extends React.Component {
   };
 
   handleDeletingKeg = (id) => {
+    this.props.firestore.delete({ collection: 'kegs', doc: id })
     const { dispatch } = this.props;
-    const deleteKegAction = a.deleteKeg(id);
-    dispatch(deleteKegAction);
     const nullSelectedAction = a.nullSelected();
     dispatch(nullSelectedAction);
   };
@@ -69,7 +68,7 @@ class KegControl extends React.Component {
 
   handleServeClick = () => {
     const selectedKeg = this.props.selectedKeg;
-    const servedKeg = Object.assign({}, selectedKeg, {pintCount: selectedKeg.pintCount-1});
+    const servedKeg = Object.assign({}, selectedKeg, { pintCount: selectedKeg.pintCount - 1 });
     this.props.firestore.update({ collection: 'kegs', doc: selectedKeg.id }, servedKeg)
     const { dispatch } = this.props;
     const setSelectedAction = a.setSelected(servedKeg);
@@ -104,7 +103,6 @@ class KegControl extends React.Component {
     } else {
       currentlyVisibleState =
         <KegList
-          kegList={this.props.mainKegList}
           onKegSelection={this.handleChangingSelectedKeg}
         />
       buttonText = "Add Keg";
@@ -128,7 +126,6 @@ const mapStateToProps = state => {
   return {
     editing: state.editing,
     formVisibleOnPage: state.formVisibleOnPage,
-    // mainKegList: state.mainKegList,
     selectedKeg: state.selectedKeg
   }
 };
