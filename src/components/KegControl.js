@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withFirestore } from 'react-redux-firebase';
 import * as a from './../actions';
 import EditKegForm from './EditKegForm';
 import KegDetail from './KegDetail';
@@ -28,10 +29,20 @@ class KegControl extends React.Component {
   };
 
   handleChangingSelectedKeg = (id) => {
-    const selectedKeg = this.props.mainKegList[id];
-    const { dispatch } = this.props;
-    const setSelectedAction = a.setSelected(selectedKeg);
-    dispatch(setSelectedAction);
+    this.props.firestore.get({ collection: 'kegs', doc: id })
+      .then((keg) => {
+        const firestoreKeg = {
+          name: keg.get("name"),
+          brand: keg.get("brand"),
+          price: keg.get("price"),
+          alcoholContent: keg.get("alcoholContent"),
+          pintCount: keg.get("pintCount"),
+          id: keg.id
+        }
+        const { dispatch } = this.props;
+        const setSelectedAction = a.setSelected(firestoreKeg);
+        dispatch(setSelectedAction);
+      });
   };
 
   handleDeletingKeg = (id) => {
@@ -79,23 +90,23 @@ class KegControl extends React.Component {
         />
       buttonText = "Return to Keg List"
     } else if (this.props.selectedKeg != null) {
-      currentlyVisibleState = 
+      currentlyVisibleState =
         <KegDetail
           keg={this.props.selectedKeg}
           onClickingServe={this.handleServeClick}
           onClickingDelete={this.handleDeletingKeg}
           onClickingEdit={this.handleEditClick}
         />
-        buttonText = "Return to Keg List";
+      buttonText = "Return to Keg List";
     } else if (this.props.formVisibleOnPage) {
-      currentlyVisibleState = 
-        <NewKegForm 
+      currentlyVisibleState =
+        <NewKegForm
           onNewKegCreation={this.handleAddingNewKegToList}
         />;
       buttonText = "Return to Keg List";
     } else {
-      currentlyVisibleState = 
-        <KegList 
+      currentlyVisibleState =
+        <KegList
           kegList={this.props.mainKegList}
           onKegSelection={this.handleChangingSelectedKeg}
         />
@@ -113,7 +124,6 @@ class KegControl extends React.Component {
 KegControl.propTypes = {
   editing: PropTypes.bool,
   formVisibleOnPage: PropTypes.bool,
-  mainKegList: PropTypes.object,
   selectedKeg: PropTypes.object
 };
 
@@ -121,11 +131,11 @@ const mapStateToProps = state => {
   return {
     editing: state.editing,
     formVisibleOnPage: state.formVisibleOnPage,
-    mainKegList: state.mainKegList,
+    // mainKegList: state.mainKegList,
     selectedKeg: state.selectedKeg
   }
 };
 
 KegControl = connect(mapStateToProps)(KegControl);
 
-export default KegControl;
+export default withFirestore(KegControl);

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReusableForm from './ReusableForm';
-import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 
@@ -17,7 +16,6 @@ function NewKegForm(props) {
         price: event.target.price.value,
         alcoholContent: event.target.alcoholContent.value,
         pintCount: 124,
-        id: v4()
       }
     );
   }
