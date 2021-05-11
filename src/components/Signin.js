@@ -35,46 +35,53 @@ function Signin() {
       });
   }
 
-
-  return (
-    <>
-      <h1>Sign up</h1>
-      <form onSubmit={doSignUp}>
-        <input
-          type='text'
-          name='email'
-          placeholder='Email'
-        />
-        <input
-          type='password'
-          name='password'
-          placeholder='Password'
-        />
-        <button type='submit'>Sign up</button>
-      </form>
-      <p id="sign-up-message"></p>
-      <hr />
-      <h1>Sign in</h1>
-      <form onSubmit={doSignIn}>
-        <input
-          type='text'
-          name='signinEmail'
-          placeholder='Email'
-        />
-        <input
-          type='password'
-          name='signinPassword'
-          placeholder='Password'
-        />
-        <button type='submit'>Sign in</button>
-      </form>
-      <p id="sign-in-message"></p>
-      <hr />
-      <h1>Sign out</h1>
-      <button onClick={doSignOut}>Sign out</button>
-      <p id="sign-out-message"></p>
-    </>
-  );
+  const auth = firebase.auth();
+  if (auth.currentUser == null) {
+    return (
+      <>
+        <h1>Sign up</h1>
+        <form onSubmit={doSignUp}>
+          <input
+            type='text'
+            name='email'
+            placeholder='Email'
+          />
+          <input
+            type='password'
+            name='password'
+            placeholder='Password'
+          />
+          <button type='submit'>Sign up</button>
+        </form>
+        <p id="sign-up-message"></p>
+        <hr />
+        <h1>Sign in</h1>
+        <form onSubmit={doSignIn}>
+          <input
+            type='text'
+            name='signinEmail'
+            placeholder='Email'
+          />
+          <input
+            type='password'
+            name='signinPassword'
+            placeholder='Password'
+          />
+          <button type='submit'>Sign in</button>
+        </form>
+        <p id="sign-in-message"></p>
+      </>
+    )
+  } if (auth.currentUser != null) {
+    return (
+      <>
+        <hr />
+        <h1>Sign out</h1>
+        <button onClick={doSignOut}>Sign out</button>
+        <p id="sign-out-message"></p>
+      </>
+    )
+  }
 }
 
 export default Signin;

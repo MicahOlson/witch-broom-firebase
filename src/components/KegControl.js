@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withFirestore } from 'react-redux-firebase';
+import { isLoaded, withFirestore } from 'react-redux-firebase';
 import * as a from './../actions';
 import EditKegForm from './EditKegForm';
 import KegDetail from './KegDetail';
@@ -76,43 +76,60 @@ class KegControl extends React.Component {
   };
 
   render() {
-    let currentlyVisibleState = null;
-    let buttonText = null;
-    if (this.props.editing) {
-      currentlyVisibleState =
-        <EditKegForm
-          keg={this.props.selectedKeg}
-          onEditKeg={this.handleEditingKegInList}
-        />
-      buttonText = "Return to Keg List"
-    } else if (this.props.selectedKeg != null) {
-      currentlyVisibleState =
-        <KegDetail
-          keg={this.props.selectedKeg}
-          onClickingServe={this.handleServeClick}
-          onClickingDelete={this.handleDeletingKeg}
-          onClickingEdit={this.handleEditClick}
-        />
-      buttonText = "Return to Keg List";
-    } else if (this.props.formVisibleOnPage) {
-      currentlyVisibleState =
-        <NewKegForm
-          onNewKegCreation={this.handleAddingNewKegToList}
-        />;
-      buttonText = "Return to Keg List";
-    } else {
-      currentlyVisibleState =
-        <KegList
-          onKegSelection={this.handleChangingSelectedKeg}
-        />
-      buttonText = "Add Keg";
+    const auth = this.props.firebase.auth();
+    if (!isLoaded(auth)) {
+      return (
+        <>
+          <p>Loading...</p>
+        </>
+      )
     }
-    return (
-      <>
-        {currentlyVisibleState}
-        <button onClick={this.handleClick}>{buttonText}</button>
-      </>
-    );
+    if ((isLoaded(auth)) && (auth.currentUser == null)) {
+      return (
+        <>
+          <p>You must be signed in to access the keg list.</p>
+        </>
+      )
+    }
+    if ((isLoaded(auth)) && (auth.currentUser != null)) {
+      let currentlyVisibleState = null;
+      let buttonText = null;
+      if (this.props.editing) {
+        currentlyVisibleState =
+          <EditKegForm
+            keg={this.props.selectedKeg}
+            onEditKeg={this.handleEditingKegInList}
+          />
+        buttonText = "Return to Keg List"
+      } else if (this.props.selectedKeg != null) {
+        currentlyVisibleState =
+          <KegDetail
+            keg={this.props.selectedKeg}
+            onClickingServe={this.handleServeClick}
+            onClickingDelete={this.handleDeletingKeg}
+            onClickingEdit={this.handleEditClick}
+          />
+        buttonText = "Return to Keg List";
+      } else if (this.props.formVisibleOnPage) {
+        currentlyVisibleState =
+          <NewKegForm
+            onNewKegCreation={this.handleAddingNewKegToList}
+          />;
+        buttonText = "Return to Keg List";
+      } else {
+        currentlyVisibleState =
+          <KegList
+            onKegSelection={this.handleChangingSelectedKeg}
+          />
+        buttonText = "Add Keg";
+      }
+      return (
+        <>
+          {currentlyVisibleState}
+          <button onClick={this.handleClick}>{buttonText}</button>
+        </>
+      );
+    }
   }
 }
 
