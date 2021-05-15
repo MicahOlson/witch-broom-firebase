@@ -1,12 +1,13 @@
-# The Witch's Broom Redux
+# The Witch's Broom Firebase
 ## _A Keg Inventory Manager_
 ### by: Micah L. Olson
 ### created: 4/30/2021
+### updated: 5/11/2021
 
 --- 
 
 ## Description
-This application is a keg inventory manager for The Witch's Broom Tap Room providing the following user features:  
+This application is a keg inventory manager for The Witch's Broom Tap Room (fictional) providing the following user features:  
 * Users can see a list of all available kegs along with their name, brand, price and alcoholContent.
 * Users can submit a form to add a new keg to the list.
 * Users can click on a keg to see its detail page.
@@ -21,6 +22,7 @@ This application is a keg inventory manager for The Witch's Broom Tap Room provi
 ## Technologies Used
 * React
 * Redux
+* Firebase/Firestore
 * JavaScript
 * JSX
 * HTML
@@ -41,22 +43,37 @@ This application is a keg inventory manager for The Witch's Broom Tap Room provi
 * You will need to use your system's **`terminal` emulator** to set up and locally use this application.
 
 * **Clone this repository** to a local directory using the command-line tools `cd` and `git`.  
-  <small>
     ([how to install git](https://www.learnhowtoprogram.com/introduction-to-programming/getting-started-with-intro-to-programming/git-and-github))
-  </small>
   ```bash
   $ cd ~/<local_directory>/
-  $ git clone https://github.com/MicahOlson/witch-broom.git
+  $ git clone https://github.com/MicahOlson/witch-broom-firebase.git
   ```
 
 * **Navigate to the top level directory** of the cloned repository.  
   ```bash
-  $ cd witch-broom/
+  $ cd witch-broom-firebase/
   ``` 
 
 * **Install all application dependencies** using the `Node Package Manager` (`npm`).
   ```bash
   $ npm install
+  ```
+
+* Create a free **`Firebase`** account online and set up a project to correspond with this repo with **Firestore** and **Authentication** enabled.  
+  ([how to set up Firebase](https://www.learnhowtoprogram.com/react/react-with-nosql/setting-up-a-firebase-project))
+
+* Add a `.env` file to the root of the `witch-broom-firebase` directory and include your `Firebase` configuration data.
+  ```bash
+  $ touch .env
+  $ nano .env
+  ```
+  ```
+  REACT_APP_FIREBASE_API_KEY="your api key here"
+  REACT_APP_FIREBASE_AUTH_DOMAIN="project-name.firebaseapp.com"
+  REACT_APP_FIREBASE_PROJECT_ID="project-name"
+  REACT_APP_FIREBASE_STORAGE_BUCKET="project-name.appspot.com"
+  REACT_APP_FIREBASE_MESSAGING_SENDER_ID="your id number"
+  REACT_APP_FIREBASE_APP_ID="your app id"
   ```
 
 * **Launch a local web server** to interact with the application in a browser.
