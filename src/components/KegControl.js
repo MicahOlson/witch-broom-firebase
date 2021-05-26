@@ -8,10 +8,10 @@ import KegDetail from './KegDetail';
 import KegList from './KegList';
 import NewKegForm from './NewKegForm';
 
-class KegControl extends React.Component {
-  handleClick = () => {
-    const { dispatch } = this.props;
-    if (this.props.selectedKeg != null) {
+function KegControl(props) {
+  const handleClick = () => {
+    const { dispatch } = props;
+    if (props.selectedKeg != null) {
       const setEditAction = a.setEditing(false);
       dispatch(setEditAction);
       const nullSelectedAction = a.nullSelected();
@@ -22,14 +22,14 @@ class KegControl extends React.Component {
     }
   };
 
-  handleAddingNewKegToList = () => {
-    const { dispatch } = this.props;
+  const handleAddingNewKegToList = () => {
+    const { dispatch } = props;
     const toggleFormAction = a.toggleForm();
     dispatch(toggleFormAction);
   };
 
-  handleChangingSelectedKeg = (id) => {
-    this.props.firestore.get({ collection: 'kegs', doc: id })
+  const handleChangingSelectedKeg = (id) => {
+    props.firestore.get({ collection: 'kegs', doc: id })
       .then((keg) => {
         const firestoreKeg = {
           name: keg.get("name"),
@@ -39,97 +39,95 @@ class KegControl extends React.Component {
           pintCount: keg.get("pintCount"),
           id: keg.id
         }
-        const { dispatch } = this.props;
+        const { dispatch } = props;
         const setSelectedAction = a.setSelected(firestoreKeg);
         dispatch(setSelectedAction);
       });
   };
 
-  handleDeletingKeg = (id) => {
-    this.props.firestore.delete({ collection: 'kegs', doc: id })
-    const { dispatch } = this.props;
+  const handleDeletingKeg = (id) => {
+    props.firestore.delete({ collection: 'kegs', doc: id })
+    const { dispatch } = props;
     const nullSelectedAction = a.nullSelected();
     dispatch(nullSelectedAction);
   };
 
-  handleEditClick = () => {
-    const { dispatch } = this.props;
+  const handleEditClick = () => {
+    const { dispatch } = props;
     const action = a.setEditing(true);
     dispatch(action);
   };
 
-  handleEditingKegInList = () => {
-    const { dispatch } = this.props;
+  const handleEditingKegInList = () => {
+    const { dispatch } = props;
     const setEditAction = a.setEditing(false);
     dispatch(setEditAction);
     const nullSelectedAction = a.nullSelected();
     dispatch(nullSelectedAction);
   };
 
-  handleServeClick = () => {
-    const selectedKeg = this.props.selectedKeg;
+  const handleServeClick = () => {
+    const selectedKeg = props.selectedKeg;
     const servedKeg = Object.assign({}, selectedKeg, { pintCount: selectedKeg.pintCount - 1 });
-    this.props.firestore.update({ collection: 'kegs', doc: selectedKeg.id }, servedKeg)
-    const { dispatch } = this.props;
+    props.firestore.update({ collection: 'kegs', doc: selectedKeg.id }, servedKeg)
+    const { dispatch } = props;
     const setSelectedAction = a.setSelected(servedKeg);
     dispatch(setSelectedAction);
   };
 
-  render() {
-    const auth = this.props.firebase.auth();
-    if (!isLoaded(auth)) {
-      return (
-        <>
-          <p>Loading...</p>
-        </>
-      )
+  const auth = props.firebase.auth();
+  if (!isLoaded(auth)) {
+    return (
+      <>
+        <p>Loading...</p>
+      </>
+    )
+  }
+  if ((isLoaded(auth)) && (auth.currentUser == null)) {
+    return (
+      <>
+        <p>You must be signed in to access the keg list.</p>
+      </>
+    )
+  }
+  if ((isLoaded(auth)) && (auth.currentUser != null)) {
+    let currentlyVisibleState = null;
+    let buttonText = null;
+    if (props.editing) {
+      currentlyVisibleState =
+        <EditKegForm
+          keg={props.selectedKeg}
+          onEditKeg={handleEditingKegInList}
+        />
+      buttonText = "Return to Keg List"
+    } else if (props.selectedKeg != null) {
+      currentlyVisibleState =
+        <KegDetail
+          keg={props.selectedKeg}
+          onClickingServe={handleServeClick}
+          onClickingDelete={handleDeletingKeg}
+          onClickingEdit={handleEditClick}
+        />
+      buttonText = "Return to Keg List";
+    } else if (props.formVisibleOnPage) {
+      currentlyVisibleState =
+        <NewKegForm
+          onNewKegCreation={handleAddingNewKegToList}
+        />;
+      buttonText = "Return to Keg List";
+    } else {
+      currentlyVisibleState =
+        <KegList
+          onKegSelection={handleChangingSelectedKeg}
+        />
+      buttonText = "Add Keg";
     }
-    if ((isLoaded(auth)) && (auth.currentUser == null)) {
-      return (
-        <>
-          <p>You must be signed in to access the keg list.</p>
-        </>
-      )
-    }
-    if ((isLoaded(auth)) && (auth.currentUser != null)) {
-      let currentlyVisibleState = null;
-      let buttonText = null;
-      if (this.props.editing) {
-        currentlyVisibleState =
-          <EditKegForm
-            keg={this.props.selectedKeg}
-            onEditKeg={this.handleEditingKegInList}
-          />
-        buttonText = "Return to Keg List"
-      } else if (this.props.selectedKeg != null) {
-        currentlyVisibleState =
-          <KegDetail
-            keg={this.props.selectedKeg}
-            onClickingServe={this.handleServeClick}
-            onClickingDelete={this.handleDeletingKeg}
-            onClickingEdit={this.handleEditClick}
-          />
-        buttonText = "Return to Keg List";
-      } else if (this.props.formVisibleOnPage) {
-        currentlyVisibleState =
-          <NewKegForm
-            onNewKegCreation={this.handleAddingNewKegToList}
-          />;
-        buttonText = "Return to Keg List";
-      } else {
-        currentlyVisibleState =
-          <KegList
-            onKegSelection={this.handleChangingSelectedKeg}
-          />
-        buttonText = "Add Keg";
-      }
-      return (
-        <>
-          {currentlyVisibleState}
-          <button onClick={this.handleClick}>{buttonText}</button>
-        </>
-      );
-    }
+    return (
+      <>
+        {currentlyVisibleState}
+        <button onClick={handleClick}>{buttonText}</button>
+      </>
+    );
   }
 }
 
