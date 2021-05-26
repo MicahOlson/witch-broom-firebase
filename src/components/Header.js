@@ -26,7 +26,7 @@ function Header() {
       <WitchBroomSubheader>
         Keg Kollector
       </WitchBroomSubheader>
-      <p><Link to='/'>Home</Link> | <Link to='/signin'>Sign In</Link></p>
+      <p><Link to='/'>Home</Link> | <Link to='/signin'>Sign In/Out</Link></p>
     </>
   )
 }
