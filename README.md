@@ -2,7 +2,7 @@
 ## _A Keg Inventory Manager_
 ### by: Micah L. Olson
 ### created: 4/30/2021
-### updated: 5/11/2021
+### updated: 5/26/2021
 
 --- 
 
